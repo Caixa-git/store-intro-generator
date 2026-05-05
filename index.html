@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>가게 소개 생성기 — 스마트스토어 AI 도구</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <span class="header-icon">🏪</span>
+        <h1 class="header-title">가게 소개 생성기</h1>
+      </div>
+      <p class="header-subtitle">스마트스토어에 딱 맞는 소개 문구를 AI가 자동으로 만들어 드립니다</p>
+    </div>
+  </header>
+
+  <!-- ==================== FORM SECTION ==================== -->
+  <section class="form-section" id="form-section">
+    <div class="container">
+      <h2 class="section-title">📝 가게 정보 입력</h2>
+      <p class="section-subtitle">아래 정보를 입력하면 4가지 톤으로 가게 소개 문구를 생성해 드립니다.</p>
+
+      <form class="intro-form" id="intro-form" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="store-name">상호명 <span class="required">*</span></label>
+            <input type="text" class="form-input" id="store-name"
+                   placeholder="예: 모모펫 스토어" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="store-category">업종/카테고리</label>
+            <select class="form-input" id="store-category">
+              <option value="반려동물 용품">반려동물 용품</option>
+              <option value="패션/의류">패션/의류</option>
+              <option value="식품/건강식품">식품/건강식품</option>
+              <option value="뷰티/화장품">뷰티/화장품</option>
+              <option value="가전/디지털">가전/디지털</option>
+              <option value="생활/주방용품">생활/주방용품</option>
+              <option value="인테리어/홈데코">인테리어/홈데코</option>
+              <option value="스포츠/레저">스포츠/레저</option>
+              <option value="문구/취미">문구/취미</option>
+              <option value="기타">기타</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="store-desc">핵심 가치 / 한줄 설명</label>
+          <textarea class="form-textarea" id="store-desc" rows="3"
+                    placeholder="예: 5년 경력의 반려동물 용품 전문 스토어, 모든 제품을 직접 테스트하고 추천합니다."></textarea>
+        </div>
+
+        <!-- ★ NEW: Target customer field -->
+        <div class="form-group highlight-field">
+          <label class="form-label" for="target-customer">
+            🎯 타겟 고객
+            <span class="field-badge new">NEW</span>
+          </label>
+          <p class="form-hint">어떤 고객을 주요 타겟으로 삼고 계신가요? 문구에 자연스럽게 반영됩니다.</p>
+          <input type="text" class="form-input" id="target-customer"
+                 placeholder="예: 반려동물을 가족처럼 생각하는 20-40대 여성">
+          <div class="quick-tags" id="quick-tags">
+            <span class="quick-tag" data-tag="20-30대 여성">20-30대 여성</span>
+            <span class="quick-tag" data-tag="30-40대 직장인">30-40대 직장인</span>
+            <span class="quick-tag" data-tag="주부 고객">주부 고객</span>
+            <span class="quick-tag" data-tag="1인 가구">1인 가구</span>
+            <span class="quick-tag" data-tag="10-20대 학생">10-20대 학생</span>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="generate-btn">
+            ✨ 소개 문구 생성하기
+          </button>
+          <button type="reset" class="btn btn-ghost" id="reset-btn">초기화</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===================== RESULTS ===================== -->
+  <section class="results-section hidden" id="results-section">
+    <div class="container">
+      <div class="results-header">
+        <h2 class="section-title">📄 생성된 소개 문구</h2>
+        <div class="results-actions">
+          <button class="btn btn-sm btn-ghost" id="regenerate-btn">🔄 다시 생성</button>
+          <button class="btn btn-sm btn-ghost" id="copy-all-btn">📋 전체 복사</button>
+        </div>
+      </div>
+      <p class="section-subtitle" id="results-summary">
+        아래 4가지 톤으로 생성된 소개 문구입니다. 각 문구에 추천 CTA도 함께 확인하세요.
+      </p>
+
+      <div class="results-grid" id="results-grid">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- ===================== CTA GUIDE PANEL ===================== -->
+      <div class="cta-panel" id="cta-panel">
+        <h3 class="cta-panel-title">📊 CTA 가이드 전체보기</h3>
+        <p class="cta-panel-desc">
+          문구의 톤에 따라 적합한 CTA(Call to Action)가 다릅니다.
+          아래 가이드를 참고하여 스토어에 가장 적합한 조합을 선택하세요.
+        </p>
+        <div class="cta-guide-grid" id="cta-guide-grid">
+          <!-- Rendered by JS -->
+        </div>
+        <details class="cta-tips">
+          <summary class="cta-tips-summary">💡 CTA 배치 팁</summary>
+          <ul class="cta-tips-list">
+            <li><strong>스토어 헤더</strong>: 가장 눈에 띄는 위치. '전문적' 또는 '친근한' 톤 권장</li>
+            <li><strong>상품 설명 하단</strong>: 구매 전환 유도. '간결한' CTA가 효과적</li>
+            <li><strong>스토어 소개 페이지</strong>: 브랜드 스토리 후 '따뜻한' 톤의 CTA로 신뢰 형성</li>
+            <li><strong>프로필/배너</strong>: 10자 이내의 짧은 CTA 사용</li>
+            <li><strong>톤 일관성 유지</strong>: 스토어 전체에서 같은 톤의 CTA를 사용하세요</li>
+          </ul>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EMPTY / LOADING ===================== -->
+  <section class="loading-section hidden" id="loading-section">
+    <div class="container">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">AI가 가게에 최적화된 문구를 만들고 있습니다...</p>
+        <div class="loading-steps">
+          <span class="loading-step">📝 입력 분석 중</span>
+          <span class="loading-step">🎯 타겟 반영 중</span>
+          <span class="loading-step">✍️ 문구 생성 중</span>
+          <span class="loading-step">🏷️ CTA 추천 중</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <p>가게 소개 생성기 · 포트폴리오 데모 · 모든 결과는 템플릿 기반으로 생성됩니다</p>
+  </footer>
+
+  <!-- ===================== TOAST ===================== -->
+  <div class="toast hidden" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
